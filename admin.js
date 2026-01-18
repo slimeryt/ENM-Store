@@ -1,11 +1,11 @@
 // Admin Panel JavaScript
 document.addEventListener('DOMContentLoaded', function() {
-    // Configuration storage
+    // Configuration storage - NO HARDCODED SECRETS
     let botConfig = {
-        token: 'MTQ2MjQzMTkzMzQyNTUxNjY0NA.GUtbGS.CtBOZcx76we3ugon9r6GAY5x4HGNHkhkUvyr9o',
-        clientId: '1462431933425516644',
+        token: '', // Will be loaded from secure storage
+        clientId: '', // Will be loaded from secure storage
         prefix: '!',
-        status: 'Managing ENM Tech Store',
+        status: 'Managing ENM Store',
         activity: 'LISTENING',
         permissions: {
             manageRoles: true,
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             autoWelcome: true,
             autoLogPurchases: true,
             autoUpdateStatus: true,
-            welcomeMessage: 'Welcome {user} to ENM Tech! 🎉\n\nCheck out our store: https://enm-store.netlify.app\nUse !help for commands',
+            welcomeMessage: 'Welcome {user} to ENM Store! 🎉\n\nCheck out our store: https://enm-store.netlify.app\nUse !help for commands',
             purchaseMessage: '🎉 New purchase from {user}!\n\n**Item:** {item}\n**Amount:** {amount}\n**Transaction ID:** {transactionId}\n\nThank you for your support! ❤️'
         },
         webhooks: {
@@ -51,11 +51,12 @@ document.addEventListener('DOMContentLoaded', function() {
         logs: []
     };
 
-    // Admin password (Change this to your own secure password)
-    const ADMIN_PASSWORD = 'mhi2jauhD#'; // You should change this!
+    // Admin password - No hardcoded value
+    let ADMIN_PASSWORD = '';
 
     // Initialize
     loadConfig();
+    loadSecrets();
     initEventListeners();
     updateStats();
 
@@ -146,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
         botConfig.permissions.attachFiles = document.getElementById('permAttachFiles').checked;
 
         saveConfig();
+        saveSecrets();
         addLog('Bot settings saved', 'success');
         alert('Bot settings saved successfully!');
     });
@@ -647,17 +649,158 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Backup settings saved!');
     });
 
+    // Load secrets from secure storage
+    function loadSecrets() {
+        // Check if we have secrets in sessionStorage (temporary, secure)
+        const storedToken = sessionStorage.getItem('discord_token');
+        const storedClientId = sessionStorage.getItem('discord_client_id');
+        const storedPassword = sessionStorage.getItem('admin_password');
+        
+        if (storedToken && storedClientId && storedPassword) {
+            botConfig.token = storedToken;
+            botConfig.clientId = storedClientId;
+            ADMIN_PASSWORD = storedPassword;
+            
+            // Update UI fields
+            document.getElementById('botToken').value = storedToken;
+            document.getElementById('clientId').value = storedClientId;
+            
+            addLog('Secrets loaded from secure storage', 'success');
+            return;
+        }
+        
+        // If no stored secrets, check URL parameters (for initial setup)
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        const clientId = urlParams.get('client_id');
+        const password = urlParams.get('password');
+        
+        if (token && clientId && password) {
+            // Store in sessionStorage (not localStorage for security)
+            sessionStorage.setItem('discord_token', token);
+            sessionStorage.setItem('discord_client_id', clientId);
+            sessionStorage.setItem('admin_password', password);
+            
+            // Remove sensitive data from URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+            
+            // Load the values
+            loadSecrets();
+            return;
+        }
+        
+        // If still no secrets, prompt the user
+        if (!botConfig.token || !botConfig.clientId) {
+            showSetupPrompt();
+        }
+    }
+    
+    function showSetupPrompt() {
+        const setupModal = document.createElement('div');
+        setupModal.className = 'modal active';
+        setupModal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-cog"></i> Initial Setup Required</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="setupToken">Discord Bot Token:</label>
+                        <input type="password" id="setupToken" class="form-control" placeholder="Enter your Discord bot token">
+                        <small class="form-text">Get this from https://discord.com/developers/applications</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="setupClientId">Discord Client ID:</label>
+                        <input type="text" id="setupClientId" class="form-control" placeholder="Enter your Discord client ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="setupPassword">Admin Password:</label>
+                        <input type="password" id="setupPassword" class="form-control" placeholder="Set an admin password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm admin password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelSetup" class="btn btn-secondary">Cancel</button>
+                    <button id="saveSetup" class="btn btn-primary">Save & Continue</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(setupModal);
+        
+        document.getElementById('saveSetup').addEventListener('click', function() {
+            const token = document.getElementById('setupToken').value;
+            const clientId = document.getElementById('setupClientId').value;
+            const password = document.getElementById('setupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!token || !clientId || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Store securely
+            sessionStorage.setItem('discord_token', token);
+            sessionStorage.setItem('discord_client_id', clientId);
+            sessionStorage.setItem('admin_password', password);
+            
+            // Update config
+            botConfig.token = token;
+            botConfig.clientId = clientId;
+            ADMIN_PASSWORD = password;
+            
+            // Update UI
+            document.getElementById('botToken').value = token;
+            document.getElementById('clientId').value = clientId;
+            
+            // Remove modal
+            document.body.removeChild(setupModal);
+            
+            addLog('Initial setup completed', 'success');
+            alert('Setup completed! You can now use the admin panel.');
+        });
+        
+        document.getElementById('cancelSetup').addEventListener('click', function() {
+            document.body.removeChild(setupModal);
+        });
+        
+        setupModal.querySelector('.modal-close').addEventListener('click', function() {
+            document.body.removeChild(setupModal);
+        });
+    }
+    
+    function saveSecrets() {
+        // Save current token and client ID to sessionStorage
+        if (botConfig.token && botConfig.clientId) {
+            sessionStorage.setItem('discord_token', botConfig.token);
+            sessionStorage.setItem('discord_client_id', botConfig.clientId);
+        }
+    }
+
     // Utility Functions
     function loadConfig() {
         const savedConfig = localStorage.getItem('enmBotConfig');
         if (savedConfig) {
             try {
                 const parsed = JSON.parse(savedConfig);
-                botConfig = { ...botConfig, ...parsed };
+                botConfig = { 
+                    ...botConfig, 
+                    ...parsed,
+                    // Don't overwrite secrets from secure storage
+                    token: botConfig.token || parsed.token || '',
+                    clientId: botConfig.clientId || parsed.clientId || ''
+                };
                 
-                // Load into UI
-                document.getElementById('botToken').value = botConfig.token || '';
-                document.getElementById('clientId').value = botConfig.clientId;
+                // Load into UI (except secrets which are already loaded)
                 document.getElementById('prefix').value = botConfig.prefix;
                 document.getElementById('botStatus').value = botConfig.status;
                 document.getElementById('botActivity').value = botConfig.activity;
@@ -710,7 +853,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function saveConfig() {
         try {
-            localStorage.setItem('enmBotConfig', JSON.stringify(botConfig));
+            // Don't save secrets to localStorage
+            const configToSave = { ...botConfig };
+            // Remove tokens from saved config for security
+            configToSave.token = '';
+            configToSave.clientId = '';
+            
+            localStorage.setItem('enmBotConfig', JSON.stringify(configToSave));
         } catch (error) {
             addLog('Failed to save configuration', 'error');
         }
@@ -804,6 +953,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Auto-update stats every 30 seconds
         setInterval(updateStats, 30000);
+        
+        // Clear session on page unload (optional, for security)
+        window.addEventListener('beforeunload', function() {
+            // Keep secrets in sessionStorage for now
+            // If you want to clear them, uncomment next line:
+            // sessionStorage.clear();
+        });
     }
 
     // Initialize
