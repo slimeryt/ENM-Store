@@ -86,12 +86,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let currentPurchase = null;
 
-    buyButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const id = this.getAttribute('data-id');
-            const price = this.getAttribute('data-price');
-            const name = this.getAttribute('data-name');
-            const type = this.getAttribute('data-type');
+    // Add event listeners to dynamically created buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('buy-btn') || e.target.closest('.buy-btn')) {
+            const button = e.target.classList.contains('buy-btn') ? e.target : e.target.closest('.buy-btn');
+            const id = button.getAttribute('data-id');
+            const price = button.getAttribute('data-price');
+            const name = button.getAttribute('data-name');
+            const type = button.getAttribute('data-type');
             
             currentPurchase = { id, price, name, type };
             
@@ -100,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('checkoutTotal').textContent = `€${parseFloat(price).toFixed(2)}`;
             
             checkoutModal.classList.add('active');
-        });
+        }
     });
 
     closeCheckout.addEventListener('click', () => {
@@ -150,6 +152,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Close checkout modal
         checkoutModal.classList.remove('active');
+        
+        // Show pending notification
+        checkPendingTransactions();
     });
 
     // FAQ Toggle
@@ -189,27 +194,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Changelog Data
-    const changelogData = [
-        { version: '1.2.0', date: '2024-01-15', changes: ['Added lifetime keys', 'Improved UI/UX', 'Added Discord integration'] },
-        { version: '1.1.0', date: '2024-01-10', changes: ['Added timed keys', 'Fixed payment bugs', 'Added account system'] },
-        { version: '1.0.0', date: '2024-01-01', changes: ['Initial release', 'Basic key system', 'PayPal integration'] }
-    ];
-
-    // Populate Changelog
-    const changelogContainer = document.querySelector('.changelog-timeline');
-    changelogData.forEach(entry => {
-        const entryElement = document.createElement('div');
-        entryElement.className = 'changelog-entry';
-        entryElement.innerHTML = `
-            <div class="changelog-version">v${entry.version}</div>
-            <div class="changelog-date">${entry.date}</div>
-            <ul class="changelog-changes">
-                ${entry.changes.map(change => `<li>${change}</li>`).join('')}
-            </ul>
-        `;
-        changelogContainer.appendChild(entryElement);
-    });
+    // Discord Rules Button
+    const showRulesBtn = document.getElementById('showRules');
+    if (showRulesBtn) {
+        showRulesBtn.addEventListener('click', () => {
+            showDiscordRules();
+        });
+    }
 
     // Initialize 3D key animation
     initKeyAnimation();
@@ -222,6 +213,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Check URL for transaction verification
     checkUrlForVerification();
+
+    // Load Discord widget
+    loadDiscordWidget();
 });
 
 function initKeyAnimation() {
@@ -243,23 +237,34 @@ function loadSettings() {
     const savedAnimations = localStorage.getItem('enmAnimations') !== 'false';
     const savedCurrency = localStorage.getItem('enmCurrency') || 'EUR';
     
-    document.getElementById('themeSelect').value = savedTheme;
-    document.body.setAttribute('data-theme', savedTheme);
-    document.getElementById('animations').checked = savedAnimations;
-    document.getElementById('currency').value = savedCurrency;
+    const themeSelect = document.getElementById('themeSelect');
+    const animations = document.getElementById('animations');
+    const currency = document.getElementById('currency');
+    
+    if (themeSelect) themeSelect.value = savedTheme;
+    if (document.body) document.body.setAttribute('data-theme', savedTheme);
+    if (animations) animations.checked = savedAnimations;
+    if (currency) currency.value = savedCurrency;
     
     // Save settings when changed
-    document.getElementById('themeSelect').addEventListener('change', function() {
-        localStorage.setItem('enmTheme', this.value);
-    });
+    if (themeSelect) {
+        themeSelect.addEventListener('change', function() {
+            localStorage.setItem('enmTheme', this.value);
+            document.body.setAttribute('data-theme', this.value);
+        });
+    }
     
-    document.getElementById('animations').addEventListener('change', function() {
-        localStorage.setItem('enmAnimations', this.checked);
-    });
+    if (animations) {
+        animations.addEventListener('change', function() {
+            localStorage.setItem('enmAnimations', this.checked);
+        });
+    }
     
-    document.getElementById('currency').addEventListener('change', function() {
-        localStorage.setItem('enmCurrency', this.value);
-    });
+    if (currency) {
+        currency.addEventListener('change', function() {
+            localStorage.setItem('enmCurrency', this.value);
+        });
+    }
 }
 
 // Save transaction to localStorage
@@ -499,7 +504,8 @@ window.showTransactionsPanel = function() {
     const transactions = JSON.parse(localStorage.getItem('enm_transactions') || '[]');
     
     const panel = document.createElement('div');
-    panel.className = 'transactions-panel active';
+    panel.className = 'transactions-panel';
+    panel.style.display = 'flex';
     panel.innerHTML = `
         <div class="transactions-content">
             <div class="transactions-header">
@@ -629,5 +635,65 @@ function checkUrlForVerification() {
             // Clean URL
             window.history.replaceState({}, document.title, window.location.pathname);
         }
+    }
+}
+
+// Show Discord rules
+function showDiscordRules() {
+    const modal = document.createElement('div');
+    modal.className = 'terms-modal';
+    modal.innerHTML = `
+        <div class="terms-content">
+            <h3><i class="fab fa-discord"></i> Discord Community Rules</h3>
+            <div class="terms-list">
+                <p>By joining our Discord server, you agree to:</p>
+                <ol>
+                    <li>Follow Discord's Terms of Service</li>
+                    <li>Respect all community members</li>
+                    <li>No sharing of purchased keys</li>
+                    <li>No chargeback abuse</li>
+                    <li>Keep discussions relevant to ENM Tech</li>
+                    <li>No spamming or self-promotion</li>
+                    <li>Use appropriate channels for support</li>
+                    <li>Keep personal disputes private</li>
+                </ol>
+                <p><strong>Violation of these rules may result in removal from the community and revocation of purchased keys.</strong></p>
+            </div>
+            <div class="terms-actions">
+                <button class="accept-terms">I Understand</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    modal.querySelector('.accept-terms').addEventListener('click', () => {
+        modal.remove();
+    });
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
+// Load Discord widget
+function loadDiscordWidget() {
+    const widgetContainer = document.getElementById('discord-widget');
+    if (widgetContainer) {
+        // You can add your Discord server ID here
+        // For example: const serverId = '123456789012345678';
+        // widgetContainer.innerHTML = `
+        //     <iframe 
+        //         src="https://discord.com/widget?id=${serverId}&theme=dark" 
+        //         width="350" 
+        //         height="500" 
+        //         allowtransparency="true" 
+        //         frameborder="0" 
+        //         sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+        //     </iframe>
+        // `;
+        // widgetContainer.style.display = 'block';
     }
 }

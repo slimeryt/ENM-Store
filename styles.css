@@ -505,6 +505,58 @@ body {
     font-size: 2rem;
 }
 
+/* Announcements */
+.announcements-section {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    border: 2px solid var(--primary-color);
+}
+
+.announcements-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.announcement {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--accent-color);
+}
+
+.announcement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.announcement-date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.view-all-announcements {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.view-all-announcements:hover {
+    color: var(--accent-color);
+}
+
 /* Shop */
 .section-title {
     font-size: 2.5rem;
@@ -746,6 +798,117 @@ body {
     box-shadow: 0 5px 20px rgba(114, 137, 218, 0.4);
 }
 
+/* Discord Community Section */
+.discord-community-section {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    border: 2px solid var(--primary-color);
+}
+
+.discord-community-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.community-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.community-feature {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.community-feature:hover {
+    transform: translateY(-5px);
+    background: rgba(114, 137, 218, 0.1);
+}
+
+.community-feature i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.community-feature h4 {
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.community-feature p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.discord-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.join-discord-btn,
+.discord-rules-btn {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 500;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.join-discord-btn {
+    background: var(--gradient-1);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.discord-rules-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.join-discord-btn:hover,
+.discord-rules-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(114, 137, 218, 0.4);
+}
+
+/* Discord Widget */
+#discord-widget {
+    margin-top: 2rem;
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border-radius: 20px;
+}
+
+#discord-widget iframe {
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+/* FAQ Section */
 .faq-section {
     background: var(--card-bg);
     padding: 2rem;
@@ -904,6 +1067,80 @@ body {
     color: var(--danger-color);
 }
 
+/* Referral Section */
+.referral-info {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-top: 1rem;
+}
+
+.referral-code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.referral-code code {
+    background: rgba(0, 217, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    flex: 1;
+    min-width: 200px;
+}
+
+.copy-referral {
+    background: var(--gradient-2);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.copy-referral:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
+}
+
+.referral-stats {
+    display: flex;
+    gap: 2rem;
+    margin: 1.5rem 0;
+}
+
+.referral-stats .stat {
+    text-align: center;
+    flex: 1;
+}
+
+.referral-stats strong {
+    display: block;
+    font-size: 2rem;
+    color: var(--accent-color);
+}
+
+.referral-terms {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
 .settings-form {
     display: flex;
     flex-direction: column;
@@ -917,6 +1154,28 @@ body {
     align-items: center;
 }
 
+.discord-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-dot.connected {
+    background-color: var(--success-color);
+    animation: pulse 2s infinite;
+}
+
+.status-dot.disconnected {
+    background-color: var(--danger-color);
+}
+
 .save-settings {
     background: var(--gradient-1);
     color: white;
@@ -926,6 +1185,12 @@ body {
     cursor: pointer;
     font-weight: 500;
     margin-top: 1rem;
+    transition: var(--transition);
+}
+
+.save-settings:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(114, 137, 218, 0.4);
 }
 
 /* Checkout Modal */
@@ -1454,8 +1719,41 @@ body {
     }
 }
 
-/* Transactions Panel */
-.transactions-panel {
+/* Discord Notification */
+.discord-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--gradient-1);
+    color: white;
+    border-radius: 12px;
+    padding: 1rem;
+    max-width: 400px;
+    z-index: 1006;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideInLeft 0.3s ease;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.discord-notification .notification-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Terms Modal */
+.terms-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -1463,203 +1761,132 @@ body {
     height: 100%;
     background: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(10px);
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1005;
+    z-index: 1007;
     padding: 20px;
 }
 
-.transactions-panel.active {
-    display: flex;
-}
-
-.transactions-content {
+.terms-content {
     background: var(--card-bg);
     border-radius: 20px;
+    padding: 2rem;
+    max-width: 500px;
     width: 100%;
-    max-width: 800px;
-    max-height: 90vh;
-    overflow-y: auto;
     border: 2px solid var(--primary-color);
 }
 
-.transactions-header {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    padding: 1.5rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 20px 20px 0 0;
-}
-
-.transactions-header h3 {
-    color: white;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.close-panel {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 5px;
-    transition: var(--transition);
-}
-
-.close-panel:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.transactions-list {
-    padding: 2rem;
-}
-
-.empty-transactions {
-    text-align: center;
-    padding: 3rem;
-    color: var(--text-secondary);
-}
-
-.transaction-item {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+.terms-list {
+    margin: 1.5rem 0;
     padding: 1.5rem;
-    margin-bottom: 1rem;
-    border-left: 4px solid transparent;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
 }
 
-.transaction-item.pending {
-    border-left-color: var(--warning-color);
-}
-
-.transaction-item.completed {
-    border-left-color: var(--success-color);
-}
-
-.transaction-item.cancelled {
-    border-left-color: var(--danger-color);
-}
-
-.transaction-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.transaction-id {
-    font-family: monospace;
-    font-size: 0.9rem;
-    color: var(--accent-color);
-}
-
-.transaction-status {
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-.transaction-status.pending {
-    background: rgba(250, 166, 26, 0.2);
-    color: var(--warning-color);
-}
-
-.transaction-status.completed {
-    background: rgba(67, 181, 129, 0.2);
-    color: var(--success-color);
-}
-
-.transaction-status.cancelled {
-    background: rgba(240, 71, 71, 0.2);
-    color: var(--danger-color);
-}
-
-.transaction-details {
-    color: var(--text-secondary);
-}
-
-.transaction-details p {
-    margin: 0.3rem 0;
-}
-
-.transaction-details code {
-    background: rgba(0, 217, 255, 0.1);
-    padding: 0.2rem 0.5rem;
-    border-radius: 5px;
-    font-family: monospace;
-    color: var(--accent-color);
-}
-
-.transaction-actions {
-    display: flex;
-    gap: 1rem;
+.terms-list ol {
+    padding-left: 1.5rem;
     margin-top: 1rem;
 }
 
-.complete-btn,
-.cancel-btn {
-    flex: 1;
-    padding: 0.8rem;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    font-weight: 500;
+.terms-list li {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.terms-actions {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    gap: 1rem;
+    margin: 1.5rem 0;
 }
 
-.complete-btn {
-    background: rgba(67, 181, 129, 0.2);
-    color: #43b581;
-    border: 1px solid #43b581;
+.accept-terms, .decline-terms {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    border: none;
+    transition: var(--transition);
 }
 
-.cancel-btn {
+.accept-terms {
+    background: var(--gradient-1);
+    color: white;
+}
+
+.decline-terms {
     background: rgba(240, 71, 71, 0.2);
     color: var(--danger-color);
     border: 1px solid var(--danger-color);
 }
 
-.complete-btn:hover,
-.cancel-btn:hover {
+.accept-terms:hover, .decline-terms:hover {
     transform: translateY(-2px);
 }
 
-.transactions-footer {
-    padding: 1.5rem 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    gap: 1rem;
+.terms-note {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
 }
 
-.transactions-footer button {
-    flex: 1;
-    padding: 0.8rem;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
+/* Role Badges */
+.role-badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin: 0.2rem;
+    background: var(--primary-color);
+    color: white;
+}
+
+.role-badge.premium {
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    color: #000;
+}
+
+.role-badge.customer {
+    background: var(--secondary-color);
+}
+
+.server-member-badge {
+    background: linear-gradient(135deg, #43b581, #3ca374);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
     font-weight: 500;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-    transition: var(--transition);
+    gap: 0.3rem;
 }
 
-.transactions-footer button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
+.verified-badge {
+    background: linear-gradient(135deg, #43b581, #3ca374);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.premium-discount {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid #ffd700;
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ffd700;
+    font-size: 0.9rem;
 }
 
 /* Responsive */
@@ -1706,7 +1933,13 @@ body {
     }
     
     .verification-actions,
-    .success-actions {
+    .success-actions,
+    .discord-actions,
+    .terms-actions {
         flex-direction: column;
+    }
+    
+    .community-features {
+        grid-template-columns: 1fr;
     }
 }

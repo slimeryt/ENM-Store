@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENM Tech - Premium Software Keys</title>
+    <title>ENM Store</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
     <!-- Topbar -->
     <div class="topbar">
         <div class="topbar-left">
-            <h1 class="logo"><span class="logo-enm">ENM</span> Tech</h1>
+            <h1 class="logo"><span class="logo-enm">ENM</span> Store</h1>
         </div>
         <div class="topbar-center">
             <nav class="nav-menu">
@@ -113,6 +113,30 @@
                 </div>
             </div>
 
+            <!-- Discord Announcements -->
+            <div class="announcements-section" id="announcementsSection">
+                <h3><i class="fab fa-discord"></i> Discord Announcements</h3>
+                <div class="announcements-list" id="announcementsList">
+                    <div class="announcement">
+                        <div class="announcement-header">
+                            <h4>Welcome to ENM Store!</h4>
+                            <span class="announcement-date">2024-01-20</span>
+                        </div>
+                        <p>Our new store is now live! Connect your Discord account for special features.</p>
+                    </div>
+                    <div class="announcement">
+                        <div class="announcement-header">
+                            <h4>Lifetime Keys Available</h4>
+                            <span class="announcement-date">2024-01-18</span>
+                        </div>
+                        <p>Get lifetime access to all our software with a one-time payment of €7.</p>
+                    </div>
+                </div>
+                <a href="https://discord.gg/example" target="_blank" class="view-all-announcements">
+                    <i class="fab fa-discord"></i> View All on Discord
+                </a>
+            </div>
+
             <div class="features">
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -179,7 +203,27 @@
             <h2 class="section-title">Changelog</h2>
             <div class="changelog-container">
                 <div class="changelog-timeline">
-                    <!-- Changelog entries will be loaded here -->
+                    <div class="changelog-entry">
+                        <div class="changelog-version">v1.2.0</div>
+                        <div class="changelog-date">2024-01-20</div>
+                        <ul class="changelog-changes">
+                            <li>Update</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-entry">
+                        <div class="changelog-version">v1.1.0</div>
+                        <div class="changelog-date">2024-01-15</div>
+                        <ul class="changelog-changes">
+                            <li>Added Keys</li>
+                        </ul>
+                    </div>
+                    <div class="changelog-entry">
+                        <div class="changelog-version">v1.0.0</div>
+                        <div class="changelog-date">2024-01-01</div>
+                        <ul class="changelog-changes">
+                            <li>Beta Release</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -204,8 +248,8 @@
                     </div>
                     <h3>Email Support</h3>
                     <p>Contact us via email for detailed inquiries</p>
-                    <a href="mailto:support@enmtech.com" class="email-link">
-                        <i class="fas fa-envelope"></i> support@enmtech.com
+                    <a href="mailto:emergencyneumuenster@gmail.com" class="email-link">
+                        <i class="fas fa-envelope"></i> emergency.neumuenster@gmail.com
                     </a>
                 </div>
                 <div class="support-card">
@@ -219,7 +263,45 @@
                     </button>
                 </div>
             </div>
+
+            <!-- Discord Community Section -->
+            <div class="discord-community-section">
+                <h3><i class="fab fa-discord"></i> Discord Community</h3>
+                <div class="community-features">
+                    <div class="community-feature">
+                        <i class="fas fa-comments"></i>
+                        <h4>Live Support</h4>
+                        <p>Get instant help from our community</p>
+                    </div>
+                    <div class="community-feature">
+                        <i class="fas fa-bell"></i>
+                        <h4>Updates & News</h4>
+                        <p>Be the first to know about new features</p>
+                    </div>
+                    <div class="community-feature">
+                        <i class="fas fa-users"></i>
+                        <h4>Community</h4>
+                        <p>Connect with other users</p>
+                    </div>
+                </div>
+                
+                <div class="discord-actions">
+                    <a href="https://discord.gg/example" class="join-discord-btn" target="_blank">
+                        <i class="fab fa-discord"></i> Join Our Discord
+                    </a>
+                    <button class="discord-rules-btn" id="showRules">
+                        <i class="fas fa-book"></i> Server Rules
+                    </button>
+                </div>
+            </div>
+
+            <!-- Discord Widget -->
+            <div id="discord-widget" style="display: none;">
+                <h3><i class="fab fa-discord"></i> Live Discord Server</h3>
+                <!-- Widget will be loaded by JavaScript -->
+            </div>
             
+            <!-- FAQ Section -->
             <div class="faq-section" id="faqSection">
                 <h3>Frequently Asked Questions</h3>
                 <div class="faq-item">
@@ -228,7 +310,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Keys are delivered instantly via email and also available in your account dashboard after purchase.</p>
+                        <p>Keys are delivered instantly after payment verification. They are saved to your account and can be accessed anytime.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -249,6 +331,15 @@
                         <p>Refunds are available within 24 hours of purchase if the key hasn't been activated.</p>
                     </div>
                 </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does Discord integration work?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Connect your Discord account to track purchases, get special roles, and access community features.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -265,6 +356,9 @@
                         </a>
                         <a href="#" class="account-nav-link" data-account="keys">
                             <i class="fas fa-key"></i> My Keys
+                        </a>
+                        <a href="#" class="account-nav-link" data-account="referral">
+                            <i class="fas fa-user-friends"></i> Referral Program
                         </a>
                         <a href="#" class="account-nav-link" data-account="settings">
                             <i class="fas fa-cog"></i> Account Settings
@@ -284,6 +378,28 @@
                             <p class="empty-state">Please log in to view your keys</p>
                         </div>
                     </div>
+                    <div class="account-section" id="referralSection">
+                        <h3>Referral Program</h3>
+                        <div class="referral-info">
+                            <p>Share your referral code with friends and earn rewards!</p>
+                            <div class="referral-code" id="referralCodeContainer">
+                                <p>Log in to get your referral code</p>
+                            </div>
+                            <div class="referral-stats">
+                                <div class="stat">
+                                    <strong id="referredCount">0</strong>
+                                    <span>Referred</span>
+                                </div>
+                                <div class="stat">
+                                    <strong id="earnedAmount">€0.00</strong>
+                                    <span>Earned</span>
+                                </div>
+                            </div>
+                            <div class="referral-terms">
+                                <p><small>Earn 10% commission on every successful referral purchase!</small></p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="account-section" id="settingsSection">
                         <h3>Account Settings</h3>
                         <div class="settings-form">
@@ -297,6 +413,13 @@
                                     <option value="dark">Dark</option>
                                     <option value="light">Light</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Discord Integration</label>
+                                <div class="discord-status" id="discordStatus">
+                                    <span class="status-dot disconnected"></span>
+                                    <span>Not Connected</span>
+                                </div>
                             </div>
                             <button class="save-settings">Save Settings</button>
                         </div>
@@ -338,13 +461,13 @@
                     <button class="proceed-payment" id="proceedToPayPal">
                         <i class="fab fa-paypal"></i> Proceed to PayPal
                     </button>
-                    <p class="payment-note">You will be redirected to PayPal to complete your payment. After paying, return to this page and click "I've Paid" in the verification modal.</p>
+                    <p class="payment-note">You will be redirected to PayPal. After payment, return and click "I've Paid" in the verification modal.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Custom verification modal will be created by JavaScript -->
+    <!-- Custom modals will be created by JavaScript -->
 
     <script src="script.js"></script>
     <script src="discord-auth.js"></script>
