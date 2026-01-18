@@ -1,6 +1,5 @@
 // Admin Panel JavaScript
 document.addEventListener('DOMContentLoaded', function() {
-    // Configuration storage - NO HARDCODED SECRETS
     let botConfig = {
         token: '', // Will be loaded from secure storage
         clientId: '', // Will be loaded from secure storage
