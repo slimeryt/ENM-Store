@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENM Tech - Premium Software Keys</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔑</text></svg>">
+</head>
+<body>
+    <!-- Background 3D Elements -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <h1 class="logo"><span class="logo-enm">ENM</span> Tech</h1>
+        </div>
+        <div class="topbar-center">
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active" data-tab="home">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#" class="nav-link" data-tab="shop">
+                    <i class="fas fa-shopping-cart"></i> Shop
+                </a>
+                <a href="#" class="nav-link" data-tab="changelog">
+                    <i class="fas fa-list-alt"></i> Changelog
+                </a>
+                <a href="#" class="nav-link" data-tab="support">
+                    <i class="fas fa-headset"></i> Support
+                </a>
+                <a href="#" class="nav-link" data-tab="account">
+                    <i class="fas fa-user-circle"></i> Account
+                </a>
+            </nav>
+        </div>
+        <div class="topbar-right">
+            <button class="settings-btn" id="settingsBtn">
+                <i class="fas fa-cog"></i>
+            </button>
+            <div class="discord-login" id="discordLogin">
+                <button class="discord-btn" id="loginBtn">
+                    <i class="fab fa-discord"></i> Login with Discord
+                </button>
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <img id="userAvatar" src="" alt="Avatar">
+                    <span id="username"></span>
+                    <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h3><i class="fas fa-cog"></i> Settings</h3>
+            <button class="close-settings" id="closeSettings">&times;</button>
+        </div>
+        <div class="settings-content">
+            <div class="setting-item">
+                <label for="themeSelect">Theme</label>
+                <select id="themeSelect">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                    <option value="cyber">Cyber</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <label for="animations">Animations</label>
+                <input type="checkbox" id="animations" checked>
+            </div>
+            <div class="setting-item">
+                <label for="currency">Currency</label>
+                <select id="currency">
+                    <option value="EUR">EUR (€)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="GBP">GBP (£)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Tab -->
+        <div class="tab-content active" id="homeTab">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h2 class="hero-title">Premium Software <span class="highlight">Keys</span></h2>
+                    <p class="hero-subtitle">Unlock the full potential of ENM Tech software with our secure, reliable keys</p>
+                    <button class="cta-button" data-tab="shop">
+                        Shop Now <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="hero-visual">
+                    <div class="key-visual">
+                        <div class="key-3d">
+                            <div class="key-shape"></div>
+                            <div class="key-teeth"></div>
+                            <div class="key-ring"></div>
+                        </div>
+                        <div class="key-glow"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Keys</h3>
+                    <p>256-bit encrypted keys with unique identifiers</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Instant Delivery</h3>
+                    <p>Receive your key immediately after payment</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Discord support for all customers</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shop Tab -->
+        <div class="tab-content" id="shopTab">
+            <h2 class="section-title">Available Keys</h2>
+            <div class="shop-container">
+                <div class="shop-category">
+                    <h3><i class="fas fa-clock"></i> Timed Keys</h3>
+                    <div class="keys-grid" id="timedKeys">
+                        <!-- Timed keys will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="shop-category">
+                    <h3><i class="fas fa-infinity"></i> Lifetime Key</h3>
+                    <div class="keys-grid">
+                        <div class="key-card lifetime">
+                            <div class="key-badge">POPULAR</div>
+                            <div class="key-header">
+                                <i class="fas fa-crown"></i>
+                                <h4>Lifetime Access</h4>
+                            </div>
+                            <div class="key-price">€7.00</div>
+                            <ul class="key-features">
+                                <li><i class="fas fa-check"></i> Permanent access</li>
+                                <li><i class="fas fa-check"></i> All future updates</li>
+                                <li><i class="fas fa-check"></i> Priority support</li>
+                                <li><i class="fas fa-check"></i> Backup key</li>
+                            </ul>
+                            <button class="buy-btn" data-id="lifetime" data-price="7.00" data-type="lifetime" data-name="Lifetime Key">
+                                <i class="fab fa-paypal"></i> Buy Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Changelog Tab -->
+        <div class="tab-content" id="changelogTab">
+            <h2 class="section-title">Changelog</h2>
+            <div class="changelog-container">
+                <div class="changelog-timeline">
+                    <!-- Changelog entries will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Tab -->
+        <div class="tab-content" id="supportTab">
+            <h2 class="section-title">Support</h2>
+            <div class="support-container">
+                <div class="support-card">
+                    <div class="support-icon">
+                        <i class="fab fa-discord"></i>
+                    </div>
+                    <h3>Discord Support</h3>
+                    <p>Join our Discord server for instant help and community support</p>
+                    <a href="https://discord.gg/example" class="discord-link" target="_blank">
+                        <i class="fab fa-discord"></i> Join Discord
+                    </a>
+                </div>
+                <div class="support-card">
+                    <div class="support-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Support</h3>
+                    <p>Contact us via email for detailed inquiries</p>
+                    <a href="mailto:support@enmtech.com" class="email-link">
+                        <i class="fas fa-envelope"></i> support@enmtech.com
+                    </a>
+                </div>
+                <div class="support-card">
+                    <div class="support-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>FAQ</h3>
+                    <p>Check our frequently asked questions</p>
+                    <button class="faq-btn" id="showFaq">
+                        <i class="fas fa-book"></i> View FAQ
+                    </button>
+                </div>
+            </div>
+            
+            <div class="faq-section" id="faqSection">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I receive my key?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Keys are delivered instantly via email and also available in your account dashboard after purchase.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What payment methods do you accept?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We currently accept PayPal payments through our secure checkout system.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I get a refund?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Refunds are available within 24 hours of purchase if the key hasn't been activated.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Tab -->
+        <div class="tab-content" id="accountTab">
+            <div class="account-container">
+                <div class="account-sidebar">
+                    <div class="account-info" id="accountInfo">
+                        <p>Please log in to view your account</p>
+                    </div>
+                    <nav class="account-nav">
+                        <a href="#" class="account-nav-link active" data-account="purchases">
+                            <i class="fas fa-shopping-bag"></i> My Purchases
+                        </a>
+                        <a href="#" class="account-nav-link" data-account="keys">
+                            <i class="fas fa-key"></i> My Keys
+                        </a>
+                        <a href="#" class="account-nav-link" data-account="settings">
+                            <i class="fas fa-cog"></i> Account Settings
+                        </a>
+                    </nav>
+                </div>
+                <div class="account-content">
+                    <div class="account-section active" id="purchasesSection">
+                        <h3>Purchase History</h3>
+                        <div class="purchases-list">
+                            <p class="empty-state">Please log in to view your purchases</p>
+                        </div>
+                    </div>
+                    <div class="account-section" id="keysSection">
+                        <h3>My Keys</h3>
+                        <div class="keys-list">
+                            <p class="empty-state">Please log in to view your keys</p>
+                        </div>
+                    </div>
+                    <div class="account-section" id="settingsSection">
+                        <h3>Account Settings</h3>
+                        <div class="settings-form">
+                            <div class="form-group">
+                                <label>Email Notifications</label>
+                                <input type="checkbox" id="emailNotifications" checked>
+                            </div>
+                            <div class="form-group">
+                                <label>Theme Preference</label>
+                                <select id="accountTheme">
+                                    <option value="dark">Dark</option>
+                                    <option value="light">Light</option>
+                                </select>
+                            </div>
+                            <button class="save-settings">Save Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-content">
+            <div class="checkout-header">
+                <h3>Complete Your Purchase</h3>
+                <button class="close-checkout">&times;</button>
+            </div>
+            <div class="checkout-body">
+                <div class="checkout-summary">
+                    <h4>Order Summary</h4>
+                    <div class="order-details">
+                        <div class="order-item">
+                            <span class="item-name" id="checkoutItemName">Lifetime Key</span>
+                            <span class="item-price" id="checkoutItemPrice">€7.00</span>
+                        </div>
+                        <div class="order-total">
+                            <span>Total</span>
+                            <span id="checkoutTotal">€7.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout-payment">
+                    <h4>Payment Method</h4>
+                    <div class="payment-method">
+                        <div class="paypal-option active">
+                            <i class="fab fa-paypal"></i>
+                            <span>PayPal</span>
+                        </div>
+                    </div>
+                    <button class="proceed-payment" id="proceedToPayPal">
+                        <i class="fab fa-paypal"></i> Proceed to PayPal
+                    </button>
+                    <p class="payment-note">You will be redirected to PayPal to complete your payment. After paying, return to this page and click "I've Paid" in the verification modal.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom verification modal will be created by JavaScript -->
+
+    <script src="script.js"></script>
+    <script src="discord-auth.js"></script>
+</body>
+</html>
