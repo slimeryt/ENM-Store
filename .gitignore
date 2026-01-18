@@ -1,0 +1,30 @@
+# Backend
+backend/node_modules/
+backend/.env
+backend/*.log
+
+# Frontend
+node_modules/
+
+# Secrets
+*.env
+.env.local
+.env.*.local
+secrets.json
+config.json
+
+# Build outputs
+dist/
+build/
+*.exe
+*.dll
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
