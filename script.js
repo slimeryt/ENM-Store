@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
         saveTransaction(pendingTransaction);
         
         // Generate PayPal.me link with transaction info in the note
-        const note = `ENM Tech - ${currentPurchase.name} - Transaction ID: ${transactionId}`;
+        const note = `ENM Store - ${currentPurchase.name} - Transaction ID: ${transactionId}`;
         const encodedNote = encodeURIComponent(note);
         const paypalUrl = `https://www.paypal.me/slimeryt/${currentPurchase.price}EUR?locale.x=en_US&item_name=${encodedNote}`;
         
@@ -652,7 +652,7 @@ function showDiscordRules() {
                     <li>Respect all community members</li>
                     <li>No sharing of purchased keys</li>
                     <li>No chargeback abuse</li>
-                    <li>Keep discussions relevant to ENM Tech</li>
+                    <li>Keep discussions relevant to ENM Store</li>
                     <li>No spamming or self-promotion</li>
                     <li>Use appropriate channels for support</li>
                     <li>Keep personal disputes private</li>

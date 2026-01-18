@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENM Store - Bot Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .admin-login {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f29 100%);
+        }
+
+        .login-box {
+            background: rgba(26, 31, 41, 0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 2px solid var(--primary-color);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(114, 137, 218, 0.4);
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .admin-dashboard {
+            display: none;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f29 100%);
+        }
+
+        .admin-header {
+            background: rgba(26, 31, 41, 0.95);
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .admin-logout {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .admin-sidebar {
+            width: 250px;
+            background: rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 0;
+        }
+
+        .admin-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0 1.5rem;
+        }
+
+        .admin-nav-link {
+            padding: 1rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-nav-link:hover,
+        .admin-nav-link.active {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .admin-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .admin-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .admin-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 217, 255, 0.2);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-color);
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper select {
+            appearance: none;
+            padding-right: 2.5rem;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2300d9ff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(114, 137, 218, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #43b581, #3ca374);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(67, 181, 129, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f04747, #d32f2f);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(240, 71, 71, 0.4);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .log-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .log-entry {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .log-entry.info {
+            color: var(--accent-color);
+        }
+
+        .log-entry.success {
+            color: var(--success-color);
+        }
+
+        .log-entry.warning {
+            color: var(--warning-color);
+        }
+
+        .log-entry.error {
+            color: var(--danger-color);
+        }
+
+        .channel-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .channel-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .channel-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .channel-info {
+            flex: 1;
+        }
+
+        .channel-name {
+            font-weight: 500;
+        }
+
+        .channel-id {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .permissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .permission-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .bot-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .status-indicator.online {
+            background-color: var(--success-color);
+            box-shadow: 0 0 10px var(--success-color);
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.offline {
+            background-color: var(--danger-color);
+        }
+
+        .status-indicator.idle {
+            background-color: var(--warning-color);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .command-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .command-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .command-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .command-name {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+        }
+
+        .command-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .command-usage {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid var(--primary-color);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            margin: 1.5rem 0;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .admin-sidebar {
+                width: 100%;
+                padding: 1rem 0;
+            }
+
+            .admin-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 0 1rem;
+            }
+
+            .admin-nav-link {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Login -->
+    <div class="admin-login" id="adminLogin">
+        <div class="login-box">
+            <h2><i class="fas fa-shield-alt"></i> Admin Access</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Enter admin password to continue</p>
+            <input type="password" class="password-input" id="adminPassword" placeholder="Enter admin password">
+            <button class="login-btn" id="loginAdminBtn">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <div class="error-message" id="loginError">
+                <i class="fas fa-exclamation-circle"></i> Invalid password
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-dashboard" id="adminDashboard">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="admin-logo">
+                <i class="fas fa-robot"></i> ENM Bot Control
+            </div>
+            <button class="admin-logout" id="adminLogout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+
+        <!-- Container -->
+        <div class="admin-container">
+            <!-- Sidebar -->
+            <div class="admin-sidebar">
+                <nav class="admin-nav">
+                    <a href="#" class="admin-nav-link active" data-section="overview">
+                        <i class="fas fa-tachometer-alt"></i> Overview
+                    </a>
+                    <a href="#" class="admin-nav-link" data-section="bot">
+                        <i class="fas fa-robot"></i> Bot Configuration
+                    </a>
+                    <a href="#" class="admin-nav-link" data-section="channels">
+                        <i class="fas fa-hashtag"></i> Channel Setup
+                    </a>
+                    <a href="#" class="admin-nav-link" data-section="roles">
+                        <i class="fas fa-user-tag"></i> Role Management
+                    </a>
+                    <a href="#" class="admin-nav-link" data-section="commands">
+                        <i class="fas fa-terminal"></i> Bot Commands
+                    </a>
+                    <a href="#" class="admin-nav-link" data-section="automation">
+                        <i class="fas fa-cogs"></i> Automation
+                    </a>
+                    <a href="#" class="admin-nav-link" data-section="webhooks">
+                        <i class="fas fa-code-branch"></i> Webhooks
+                    </a>
+                    <a href="#" class="admin-nav-link" data-section="logs">
+                        <i class="fas fa-clipboard-list"></i> Activity Logs
+                    </a>
+                    <a href="#" class="admin-nav-link" data-section="backup">
+                        <i class="fas fa-download"></i> Backup & Restore
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="admin-content">
+                <!-- Overview Section -->
+                <div class="admin-section active" id="overviewSection">
+                    <div class="bot-status">
+                        <div class="status-indicator online" id="botStatusIndicator"></div>
+                        <div>
+                            <h4 style="margin-bottom: 0.2rem;">Bot Status: <span id="botStatusText">Online</span></h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">Last checked: <span id="lastChecked">Just now</span></p>
+                        </div>
+                        <button class="btn btn-secondary" id="refreshStatusBtn">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalUsers">0</div>
+                            <div class="stat-label">Total Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalPurchases">0</div>
+                            <div class="stat-label">Total Purchases</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="activeKeys">0</div>
+                            <div class="stat-label">Active Keys</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="revenue">€0.00</div>
+                            <div class="stat-label">Total Revenue</div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="admin-card">
+                            <h3><i class="fas fa-chart-line"></i> Quick Actions</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <button class="btn btn-primary" id="sendTestMsgBtn">
+                                    <i class="fas fa-paper-plane"></i> Send Test Message
+                                </button>
+                                <button class="btn btn-secondary" id="syncUsersBtn">
+                                    <i class="fas fa-sync-alt"></i> Sync Discord Users
+                                </button>
+                                <button class="btn btn-success" id="updateRolesBtn">
+                                    <i class="fas fa-user-tag"></i> Update All Roles
+                                </button>
+                                <button class="btn btn-danger" id="clearLogsBtn">
+                                    <i class="fas fa-trash"></i> Clear Old Logs
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="admin-card">
+                            <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                            <div class="log-container" id="recentLogs">
+                                <div class="log-entry info">System started</div>
+                                <div class="log-entry success">Admin logged in</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bot Configuration Section -->
+                <div class="admin-section" id="botSection">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-cog"></i> Bot Settings</h3>
+                        <div class="form-group">
+                            <label for="botToken">Discord Bot Token</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="password" class="form-control" id="botToken" placeholder="Enter your bot token">
+                                <button class="btn btn-secondary" id="toggleTokenBtn">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small style="color: var(--text-secondary); margin-top: 0.5rem; display: block;">
+                                Get this from <a href="https://discord.com/developers/applications" target="_blank" style="color: var(--accent-color);">Discord Developer Portal</a>
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="clientId">Client ID</label>
+                            <input type="text" class="form-control" id="clientId" placeholder="1462431933425516644">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prefix">Command Prefix</label>
+                            <input type="text" class="form-control" id="prefix" placeholder="!" maxlength="3">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="botStatus">Bot Status Message</label>
+                            <input type="text" class="form-control" id="botStatus" placeholder="Managing ENM Tech Store">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="botActivity">Bot Activity Type</label>
+                            <select class="form-control" id="botActivity">
+                                <option value="PLAYING">Playing</option>
+                                <option value="WATCHING">Watching</option>
+                                <option value="LISTENING">Listening to</option>
+                                <option value="STREAMING">Streaming</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-primary" id="saveBotSettingsBtn">
+                            <i class="fas fa-save"></i> Save Bot Settings
+                        </button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3><i class="fas fa-shield-alt"></i> Bot Permissions</h3>
+                        <div class="permissions-grid">
+                            <div class="permission-item">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="permManageRoles" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Manage Roles</span>
+                            </div>
+                            <div class="permission-item">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="permManageMessages" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Manage Messages</span>
+                            </div>
+                            <div class="permission-item">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="permKickMembers">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Kick Members</span>
+                            </div>
+                            <div class="permission-item">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="permBanMembers">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Ban Members</span>
+                            </div>
+                            <div class="permission-item">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="permReadMessages" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Read Messages</span>
+                            </div>
+                            <div class="permission-item">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="permSendMessages" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Send Messages</span>
+                            </div>
+                            <div class="permission-item">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="permEmbedLinks" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Embed Links</span>
+                            </div>
+                            <div class="permission-item">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="permAttachFiles" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Attach Files</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Channel Setup Section -->
+                <div class="admin-section" id="channelsSection">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-hashtag"></i> Channel Configuration</h3>
+                        
+                        <div class="form-group">
+                            <label for="logChannel">Log Channel</label>
+                            <select class="form-control" id="logChannel">
+                                <option value="">Select a channel</option>
+                                <!-- Channels will be loaded here -->
+                            </select>
+                            <small style="color: var(--text-secondary);">Where bot logs activity</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="announceChannel">Announcement Channel</label>
+                            <select class="form-control" id="announceChannel">
+                                <option value="">Select a channel</option>
+                            </select>
+                            <small style="color: var(--text-secondary);">For purchase announcements</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="welcomeChannel">Welcome Channel</label>
+                            <select class="form-control" id="welcomeChannel">
+                                <option value="">Select a channel</option>
+                            </select>
+                            <small style="color: var(--text-secondary);">For welcome messages</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supportChannel">Support Channel</label>
+                            <select class="form-control" id="supportChannel">
+                                <option value="">Select a channel</option>
+                            </select>
+                            <small style="color: var(--text-secondary);">For support tickets</small>
+                        </div>
+
+                        <button class="btn btn-primary" id="saveChannelsBtn">
+                            <i class="fas fa-save"></i> Save Channel Settings
+                        </button>
+                        <button class="btn btn-secondary" id="fetchChannelsBtn">
+                            <i class="fas fa-sync-alt"></i> Fetch Channels from Discord
+                        </button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3><i class="fas fa-list"></i> Available Channels</h3>
+                        <div class="channel-list" id="channelList">
+                            <!-- Channels will be listed here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role Management Section -->
+                <div class="admin-section" id="rolesSection">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-user-tag"></i> Role Configuration</h3>
+                        
+                        <div class="form-group">
+                            <label for="customerRole">Customer Role</label>
+                            <select class="form-control" id="customerRole">
+                                <option value="">Select a role</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="premiumRole">Premium Role</label>
+                            <select class="form-control" id="premiumRole">
+                                <option value="">Select a role</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adminRole">Admin Role</label>
+                            <select class="form-control" id="adminRole">
+                                <option value="">Select a role</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="modRole">Moderator Role</label>
+                            <select class="form-control" id="modRole">
+                                <option value="">Select a role</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-primary" id="saveRolesBtn">
+                            <i class="fas fa-save"></i> Save Role Settings
+                        </button>
+                        <button class="btn btn-secondary" id="fetchRolesBtn">
+                            <i class="fas fa-sync-alt"></i> Fetch Roles from Discord
+                        </button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3><i class="fas fa-palette"></i> Create New Role</h3>
+                        
+                        <div class="form-group">
+                            <label for="newRoleName">Role Name</label>
+                            <input type="text" class="form-control" id="newRoleName" placeholder="e.g., VIP Member">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newRoleColor">Role Color</label>
+                            <div class="color-picker">
+                                <div class="color-preview" id="colorPreview" style="background-color: #7289da;"></div>
+                                <input type="color" class="form-control" id="newRoleColor" value="#7289da" style="width: 100px;">
+                                <input type="text" class="form-control" id="newRoleColorHex" value="#7289da" placeholder="#7289da" style="flex: 1;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newRolePermissions">Permissions</label>
+                            <textarea class="form-control" id="newRolePermissions" rows="3" placeholder="Optional: Add permission reason"></textarea>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="newRoleHoist">
+                            <label for="newRoleHoist">Display role members separately</label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="newRoleMentionable">
+                            <label for="newRoleMentionable">Allow role to be mentioned</label>
+                        </div>
+
+                        <button class="btn btn-success" id="createRoleBtn">
+                            <i class="fas fa-plus"></i> Create Role
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bot Commands Section -->
+                <div class="admin-section" id="commandsSection">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-terminal"></i> Custom Commands</h3>
+                        
+                        <div class="command-list">
+                            <div class="command-item">
+                                <div class="command-header">
+                                    <div class="command-name">!help</div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="command-description">Shows all available commands</div>
+                                <div class="command-usage">Usage: !help</div>
+                            </div>
+
+                            <div class="command-item">
+                                <div class="command-header">
+                                    <div class="command-name">!key</div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="command-description">Shows your active keys</div>
+                                <div class="command-usage">Usage: !key</div>
+                            </div>
+
+                            <div class="command-item">
+                                <div class="command-header">
+                                    <div class="command-name">!purchase</div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="command-description">Shows your purchase history</div>
+                                <div class="command-usage">Usage: !purchase</div>
+                            </div>
+
+                            <div class="command-item">
+                                <div class="command-header">
+                                    <div class="command-name">!support</div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="command-description">Opens a support ticket</div>
+                                <div class="command-usage">Usage: !support [message]</div>
+                            </div>
+
+                            <div class="command-item">
+                                <div class="command-header">
+                                    <div class="command-name">!status</div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="command-description">Shows bot status and uptime</div>
+                                <div class="command-usage">Usage: !status</div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" id="addCommandBtn" style="margin-top: 2rem;">
+                            <i class="fas fa-plus"></i> Add New Command
+                        </button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3><i class="fas fa-reply"></i> Auto-Responses</h3>
+                        
+                        <div class="form-group">
+                            <label for="autoResponseTrigger">Trigger Word/Phrase</label>
+                            <input type="text" class="form-control" id="autoResponseTrigger" placeholder="e.g., hello, hi, hey">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="autoResponseMessage">Response Message</label>
+                            <textarea class="form-control" id="autoResponseMessage" rows="3" placeholder="Hello there! How can I help you today?"></textarea>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="autoResponseCaseSensitive">
+                            <label for="autoResponseCaseSensitive">Case Sensitive</label>
+                        </div>
+
+                        <button class="btn btn-success" id="addAutoResponseBtn">
+                            <i class="fas fa-plus"></i> Add Auto-Response
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Automation Section -->
+                <div class="admin-section" id="automationSection">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-cogs"></i> Automation Rules</h3>
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="autoAssignRoles" checked>
+                            <label for="autoAssignRoles">Automatically assign Customer role on join</label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="autoWelcome" checked>
+                            <label for="autoWelcome">Send welcome message to new members</label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="autoLogPurchases" checked>
+                            <label for="autoLogPurchases">Log purchases to channel</label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="autoUpdateStatus" checked>
+                            <label for="autoUpdateStatus">Auto-update bot status</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="welcomeMessage">Welcome Message Template</label>
+                            <textarea class="form-control" id="welcomeMessage" rows="4" placeholder="Welcome {user} to our server! 🎉">Welcome {user} to ENM Store! 🎉
+
+Check out our store: https://enm-store.netlify.app
+Use !help for commands</textarea>
+                            <small style="color: var(--text-secondary); margin-top: 0.5rem; display: block;">
+                                Available variables: {user}, {server}, {memberCount}
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="purchaseMessage">Purchase Announcement Template</label>
+                            <textarea class="form-control" id="purchaseMessage" rows="4" placeholder="🎉 New purchase from {user}!">🎉 New purchase from {user}!
+
+**Item:** {item}
+**Amount:** {amount}
+**Transaction ID:** {transactionId}
+
+Thank you for your support! ❤️</textarea>
+                            <small style="color: var(--text-secondary); margin-top: 0.5rem; display: block;">
+                                Available variables: {user}, {item}, {amount}, {transactionId}
+                            </small>
+                        </div>
+
+                        <button class="btn btn-primary" id="saveAutomationBtn">
+                            <i class="fas fa-save"></i> Save Automation Settings
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Webhooks Section -->
+                <div class="admin-section" id="webhooksSection">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-code-branch"></i> Webhook Configuration</h3>
+                        
+                        <div class="form-group">
+                            <label for="purchaseWebhook">Purchase Webhook URL</label>
+                            <input type="text" class="form-control" id="purchaseWebhook" placeholder="https://discord.com/api/webhooks/...">
+                            <small style="color: var(--text-secondary);">Send purchase notifications to this webhook</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="errorWebhook">Error Webhook URL</label>
+                            <input type="text" class="form-control" id="errorWebhook" placeholder="https://discord.com/api/webhooks/...">
+                            <small style="color: var(--text-secondary);">Send error notifications to this webhook</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="logWebhook">Log Webhook URL</label>
+                            <input type="text" class="form-control" id="logWebhook" placeholder="https://discord.com/api/webhooks/...">
+                            <small style="color: var(--text-secondary);">Send general logs to this webhook</small>
+                        </div>
+
+                        <button class="btn btn-primary" id="testWebhookBtn">
+                            <i class="fas fa-paper-plane"></i> Test Webhooks
+                        </button>
+                        <button class="btn btn-success" id="saveWebhooksBtn">
+                            <i class="fas fa-save"></i> Save Webhook Settings
+                        </button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3><i class="fas fa-history"></i> Webhook Logs</h3>
+                        <div class="log-container" id="webhookLogs">
+                            <!-- Webhook logs will appear here -->
+                        </div>
+                        <button class="btn btn-secondary" id="clearWebhookLogsBtn" style="margin-top: 1rem;">
+                            <i class="fas fa-trash"></i> Clear Logs
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Activity Logs Section -->
+                <div class="admin-section" id="logsSection">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-clipboard-list"></i> System Logs</h3>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="margin-right: 1rem;">Filter:</label>
+                            <button class="btn btn-secondary active" data-filter="all">All</button>
+                            <button class="btn btn-secondary" data-filter="info">Info</button>
+                            <button class="btn btn-secondary" data-filter="success">Success</button>
+                            <button class="btn btn-secondary" data-filter="warning">Warning</button>
+                            <button class="btn btn-secondary" data-filter="error">Error</button>
+                        </div>
+
+                        <div class="log-container" id="systemLogs">
+                            <div class="log-entry info">Admin panel loaded</div>
+                            <div class="log-entry success">Bot settings loaded from storage</div>
+                            <div class="log-entry warning">No bot token configured</div>
+                            <div class="log-entry info">Ready to configure bot</div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                            <button class="btn btn-primary" id="exportLogsBtn">
+                                <i class="fas fa-download"></i> Export Logs
+                            </button>
+                            <button class="btn btn-danger" id="clearAllLogsBtn">
+                                <i class="fas fa-trash"></i> Clear All Logs
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backup & Restore Section -->
+                <div class="admin-section" id="backupSection">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-download"></i> Backup Configuration</h3>
+                        
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                            Backup your bot configuration to a file. You can restore it later if needed.
+                        </p>
+
+                        <button class="btn btn-primary" id="backupConfigBtn" style="margin-bottom: 1rem;">
+                            <i class="fas fa-file-export"></i> Export Configuration
+                        </button>
+
+                        <div style="border: 2px dashed rgba(255, 255, 255, 0.1); padding: 2rem; text-align: center; border-radius: 10px; margin: 2rem 0;">
+                            <i class="fas fa-file-upload" style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                            <h4 style="margin-bottom: 0.5rem;">Import Configuration</h4>
+                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Upload a configuration file to restore settings</p>
+                            <input type="file" id="configUpload" accept=".json" style="display: none;">
+                            <label for="configUpload" class="btn btn-secondary">
+                                <i class="fas fa-upload"></i> Choose File
+                            </label>
+                            <div id="selectedFileName" style="margin-top: 1rem; color: var(--text-secondary);"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="backupSchedule">Automatic Backup Schedule</label>
+                            <select class="form-control" id="backupSchedule">
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="never" selected>Never</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-success" id="saveBackupSettingsBtn">
+                            <i class="fas fa-save"></i> Save Backup Settings
+                        </button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3><i class="fas fa-history"></i> Backup History</h3>
+                        <div id="backupHistory">
+                            <!-- Backup history will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Command Modal -->
+    <div class="modal" id="addCommandModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus"></i> Add New Command</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newCommandName">Command Name (with prefix)</label>
+                    <input type="text" class="form-control" id="newCommandName" placeholder="e.g., !ping">
+                </div>
+                <div class="form-group">
+                    <label for="newCommandDescription">Description</label>
+                    <input type="text" class="form-control" id="newCommandDescription" placeholder="What this command does">
+                </div>
+                <div class="form-group">
+                    <label for="newCommandUsage">Usage Example</label>
+                    <input type="text" class="form-control" id="newCommandUsage" placeholder="e.g., !ping">
+                </div>
+                <div class="form-group">
+                    <label for="newCommandResponse">Response</label>
+                    <textarea class="form-control" id="newCommandResponse" rows="3" placeholder="What the bot should reply"></textarea>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="newCommandEnabled" checked>
+                    <label for="newCommandEnabled">Enable command</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelCommandBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveCommandBtn">Add Command</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Webhook Modal -->
+    <div class="modal" id="testWebhookModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-paper-plane"></i> Test Webhook</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="testWebhookType">Webhook Type</label>
+                    <select class="form-control" id="testWebhookType">
+                        <option value="purchase">Purchase Notification</option>
+                        <option value="error">Error Notification</option>
+                        <option value="log">General Log</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="testMessage">Test Message</label>
+                    <textarea class="form-control" id="testMessage" rows="3" placeholder="Enter test message...">This is a test message from the admin panel</textarea>
+                </div>
+                <div id="testWebhookResult" style="display: none; padding: 1rem; border-radius: 8px; margin-top: 1rem;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelTestBtn">Cancel</button>
+                <button class="btn btn-primary" id="sendTestBtn">Send Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

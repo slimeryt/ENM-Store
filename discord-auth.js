@@ -464,7 +464,7 @@ class DiscordAuth {
             notification.innerHTML = `
                 <div class="notification-header">
                     <i class="fab fa-discord"></i>
-                    <h4>Welcome to ENM Tech! 👋</h4>
+                    <h4>Welcome to ENM Store! 👋</h4>
                     <button class="close-notification">&times;</button>
                 </div>
                 <div class="notification-body">
